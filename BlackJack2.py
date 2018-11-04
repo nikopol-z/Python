@@ -61,8 +61,8 @@ class Hand():
 			self.aces -= 1
 
 	def win_bet(self):
-		self.chips += self.bet * 2
-		print(self.name+' won! And got '+str(self.bet*2))
+		self.chips += self.bet
+		print(self.name+' won! And got '+str(self.bet))
 		self.bet = 0
 
 	def lose_bet(self):
@@ -240,8 +240,7 @@ while isPlaing:
 	#clear()
 	# Ask Players with not zero bet for stay or hit
 	for player in players:
-		if player.bet != 0:
-			player.stay_or_hit(my_deck)
+		player.stay_or_hit(my_deck)
 
 	# Count who win
 	print("===================================")
