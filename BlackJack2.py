@@ -151,6 +151,7 @@ class DealerHand(Hand):
 		pass
 
 	def stay_or_hit(self,deck):
+		#Check why it doen't work correct
 		while True:
 			if self.score < 17:
 				self.take(deck.deal())
