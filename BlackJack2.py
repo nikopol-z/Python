@@ -79,8 +79,17 @@ class Hand():
 
 	def make_bet(self):
 		while True:
+			self.bet = input('\n'+ self.name +', make your bet! Insert integer value.' )
+			if self.bet == '':
+				if self.chips >= 10:
+					self.bet = 10
+					print("Your bet is 10")
+				else:
+					self.bet = self.chips
+					print("Your bet is {}".format(self.bet))
+				break
 			try:
-				self.bet = int(input('\n'+ self.name +', make your bet! Insert integer value.'))
+				self.bet = int(self.bet)
 			except:
 				print("Whoops, that isn't an integer.")
 			else:
@@ -92,7 +101,7 @@ class Hand():
 					break
 				elif self.bet < 0:
 					print("You can't bet a negative sum!")
-					continue
+					continue 
 				elif self.bet == 0:
 					print("You not going to play, but you have to pay! 10 chips or less.")
 					if self.chips >= 10:
@@ -103,12 +112,14 @@ class Hand():
 						self.bet = 0
 					break
 				else:
-					print("Thank you. Your bet "+str(self.bet)+" is accepted.")
+					print("Thank you. Your bet "+str(self.bet)+" is accepted.\n")
 					break
 
 	def stay_or_hit(self,deck):
 		while True:
-			turn = input(self.name+"! Stay or Hit? Press 's' or 'h'")
+			turn = input(self.name+"! Stay or Hit? Press 's' or 'h' ")
+			if turn == '':
+				continue
 			if turn[0].lower() == 'h':
 				self.hit(deck)
 				if self.score > 21:
@@ -120,7 +131,7 @@ class Hand():
 			elif turn[0].lower() == 's':
 				print(self.name+" stands.")
 			else:
-				print("Whoops, looks like you didn't press 's' or 'h'.")
+				print("Whoops, looks like you didn't press 's' or 'h'. ")
 				continue
 			break
 
@@ -143,15 +154,11 @@ class DealerHand(Hand):
 	def __init__(self,name,chips=100):
 		Hand.__init__(self,name,chips=100)
 		self.should_hide_card = True
-		#temp = self.should_hide_card
-		#self.final_score = lambda temp: (temp=False) if temp == True else ('345')
 
 	def make_bet(self):
-		#self.bet = math.floor(self.chips/2)
 		pass
 
 	def stay_or_hit(self,deck):
-		#Check why it doen't work correct
 		while True:
 			if self.score < 17:
 				self.take(deck.deal())
@@ -163,13 +170,8 @@ class DealerHand(Hand):
 		for card in self.cards:
 			self.temp_string += card.__str__()
 			if self.should_hide_card:
-				#self.should_hide_card = False
 				break	
 			self.temp_string += ' '
-		#if self.should_hide_card == False:
-		#self.should_hide_card = False
-
-		#return self.name + ' cards: \n\t' + self.temp_string + str(self.final_score(self.should_hide_card))
 		if self.should_hide_card:
 			self.should_hide_card = False
 			return self.name + ' cards: \n\t' + self.temp_string + ' + hidden card'
@@ -181,7 +183,9 @@ class DealerHand(Hand):
 def playAgain():
 	global isPlaing, players
 	while True:
-		playMore = input("Do you want to play more? Y/N")
+		playMore = input("Do you want to play more? Y/N ")
+		if playMore == '':
+			continue
 		if playMore[0].lower() == 'y':
 			if len(players) == 1:
 				print("Sorry, no more players with money! Bye!")
@@ -194,7 +198,7 @@ def playAgain():
 			print('Goodbye!')
 			break
 		else:
-			print("Please, insert 'y' or 'n'")
+			print("Please, insert 'y' or 'n'. ")
 			continue
 
 
@@ -202,19 +206,24 @@ def playAgain():
 # Make new deck and shuffle it
 my_deck = Deck()
 my_deck.shuffle()
-#print(my_deck)
 	 
 # Make a list for Players and a Dealer
 players = []
 players.append(DealerHand('Dealer'))
 
-
 # Make new human players
 ## TO-DO: Insert Name and Number verification and limitation of max and min players
 ## TO-DO: Maybe make a default values
-for i in range(1,int(input("How many players?"))+1):
-	new_players_name = input("Please, want's your name?")
-	players.append(HumanHand(str(new_players_name)))
+howManyPlayers = input("How many players?")
+if howManyPlayers == '':
+	howManyPlayers = 1
+#TO-DO: add try for not integers values
+for i in range(1,int(howManyPlayers)+1):
+	new_players_name = input("Please, want's your name? ")
+	if new_players_name != '':
+		players.append(HumanHand(str(new_players_name)))
+	else:
+		players.append(HumanHand("Player #" + str(i)))
 
 # Main Game Cycle
 isPlaing = True
