@@ -172,7 +172,7 @@ class DealerHand(Hand):
 		#return self.name + ' cards: \n\t' + self.temp_string + str(self.final_score(self.should_hide_card))
 		if self.should_hide_card:
 			self.should_hide_card = False
-			return self.name + ' cards: \n\t' + self.temp_string
+			return self.name + ' cards: \n\t' + self.temp_string + ' + hidden card'
 		else:
 			self.should_hide_card = True
 			return self.name + ' cards: \n\t' + self.temp_string + ' (' + str(self.score) + ')'
