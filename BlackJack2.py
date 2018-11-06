@@ -112,7 +112,7 @@ class Hand():
 						self.bet = 0
 					break
 				else:
-					print("Thank you. Your bet "+str(self.bet)+" is accepted.\n")
+					print("Thank you. Your bet "+str(self.bet)+" is accepted.")
 					break
 
 	def stay_or_hit(self,deck):
